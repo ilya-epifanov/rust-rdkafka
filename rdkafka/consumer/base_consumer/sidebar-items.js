@@ -1,0 +1,1 @@
+initSidebarItems({"fn":[["native_commit_cb",""]],"struct":[["BaseConsumer","Low level wrapper around the librdkafka consumer. This consumer requires to be periodically polled to make progress on rebalance, callbacks and to receive messages."]]});
