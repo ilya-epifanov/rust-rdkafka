@@ -10,11 +10,8 @@
     <title>rdkafka::producer::future_producer::FutureProducer - Rust</title>
 
     <link rel="stylesheet" type="text/css" href="../../../normalize.css">
-    <link rel="stylesheet" type="text/css" href="../../../rustdoc.css" id="mainThemeStyle">
-    
-    <link rel="stylesheet" type="text/css" href="../../../dark.css">
-    <link rel="stylesheet" type="text/css" href="../../../main.css" id="themeStyle">
-    <script src="../../../storage.js"></script>
+    <link rel="stylesheet" type="text/css" href="../../../rustdoc.css">
+    <link rel="stylesheet" type="text/css" href="../../../main.css">
     
 
     
@@ -36,13 +33,6 @@
         <p class='location'>Struct FutureProducer</p><div class="sidebar-elems"><div class="block items"><a class="sidebar-title" href="#methods">Methods</a><div class="sidebar-links"><a href="#method.send_copy">send_copy</a><a href="#method.send_copy_result">send_copy_result</a><a href="#method.poll">poll</a><a href="#method.flush">flush</a><a href="#method.in_flight_count">in_flight_count</a></div><a class="sidebar-title" href="#implementations">Trait Implementations</a><div class="sidebar-links"><a href="#impl-Clone">Clone</a><a href="#impl-FromClientConfig">FromClientConfig</a><a href="#impl-FromClientConfigAndContext%3CC%3E">FromClientConfigAndContext&lt;C&gt;</a></div></div><p class='location'><a href='../../index.html'>rdkafka</a>::<wbr><a href='../index.html'>producer</a>::<wbr><a href='index.html'>future_producer</a></p><script>window.sidebarCurrent = {name: 'FutureProducer', ty: 'struct', relpath: ''};</script><script defer src="sidebar-items.js"></script></div>
     </nav>
 
-    <div class="theme-picker">
-        <button id="theme-picker" aria-label="Pick another theme!">
-            <img src="../../../brush.svg" width="18" alt="Pick another theme!">
-        </button>
-        <div id="theme-choices"></div>
-    </div>
-    <script src="../../../theme.js"></script>
     <nav class="sub">
         <form class="search-form js-only">
             <div class="search-container">
@@ -62,10 +52,11 @@
                </span><a class='srclink' href='../../../src/rdkafka/producer/future_producer.rs.html#68-70' title='goto source code'>[src]</a></span></h1>
 <pre class='rust struct'><div class="docblock attributes">#[must_use = "Producer polling thread will stop immediately if unused"]
 </div>pub struct FutureProducer&lt;C:&nbsp;<a class="trait" href="../../../rdkafka/client/trait.ClientContext.html" title="trait rdkafka::client::ClientContext">ClientContext</a> + 'static&nbsp;=&nbsp;<a class="struct" href="../../../rdkafka/client/struct.DefaultClientContext.html" title="struct rdkafka::client::DefaultClientContext">DefaultClientContext</a>&gt; { /* fields omitted */ }</pre><div class='docblock'><p>A producer that returns a <code>Future</code> for every message being produced.</p>
+
 <p>Since message production in rdkafka is asynchronous, the called cannot immediately know if the
 delivery of the message was successful or not. The <code>FutureProducer</code> provides this information in
 a <code>Future</code>, that will be completed once the information becomes available. This producer has an
-internal polling thread and as such it doesn't need to be polled. It can be cheaply cloned to
+internal polling thread and as such it doesn&#39;t need to be polled. It can be cheaply cloned to
 get a reference to the same underlying producer. The internal will be terminated once the
 the <code>FutureProducer</code> goes out of scope.</p>
 </div>
@@ -84,10 +75,10 @@ reported in the <code>DeliveryFuture</code>.</p>
 </div><h4 id='method.send_copy_result' class="method"><span id='send_copy_result.v' class='invisible'><code>pub fn <a href='#method.send_copy_result' class='fnname'>send_copy_result</a>&lt;P:&nbsp;?<a class="trait" href="https://doc.rust-lang.org/nightly/core/marker/trait.Sized.html" title="trait core::marker::Sized">Sized</a>, K:&nbsp;?<a class="trait" href="https://doc.rust-lang.org/nightly/core/marker/trait.Sized.html" title="trait core::marker::Sized">Sized</a>&gt;(<br>&nbsp;&nbsp;&nbsp;&nbsp;&amp;self, <br>&nbsp;&nbsp;&nbsp;&nbsp;topic: &amp;<a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.str.html">str</a>, <br>&nbsp;&nbsp;&nbsp;&nbsp;partition: <a class="enum" href="https://doc.rust-lang.org/nightly/core/option/enum.Option.html" title="enum core::option::Option">Option</a>&lt;<a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.i32.html">i32</a>&gt;, <br>&nbsp;&nbsp;&nbsp;&nbsp;payload: <a class="enum" href="https://doc.rust-lang.org/nightly/core/option/enum.Option.html" title="enum core::option::Option">Option</a>&lt;<a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.reference.html">&amp;</a>P&gt;, <br>&nbsp;&nbsp;&nbsp;&nbsp;key: <a class="enum" href="https://doc.rust-lang.org/nightly/core/option/enum.Option.html" title="enum core::option::Option">Option</a>&lt;<a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.reference.html">&amp;</a>K&gt;, <br>&nbsp;&nbsp;&nbsp;&nbsp;timestamp: <a class="enum" href="https://doc.rust-lang.org/nightly/core/option/enum.Option.html" title="enum core::option::Option">Option</a>&lt;<a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.i64.html">i64</a>&gt;<br>) -&gt; <a class="type" href="../../../rdkafka/error/type.KafkaResult.html" title="type rdkafka::error::KafkaResult">KafkaResult</a>&lt;<a class="struct" href="../../../rdkafka/producer/future_producer/struct.DeliveryFuture.html" title="struct rdkafka::producer::future_producer::DeliveryFuture">DeliveryFuture</a>&gt; <span class="where fmt-newline">where<br>&nbsp;&nbsp;&nbsp;&nbsp;K: <a class="trait" href="../../../rdkafka/message/trait.ToBytes.html" title="trait rdkafka::message::ToBytes">ToBytes</a>,<br>&nbsp;&nbsp;&nbsp;&nbsp;P: <a class="trait" href="../../../rdkafka/message/trait.ToBytes.html" title="trait rdkafka::message::ToBytes">ToBytes</a>,&nbsp;</span></code></span><span class='out-of-band'><div class='ghost'></div><a class='srclink' href='../../../src/rdkafka/producer/future_producer.rs.html#172-185' title='goto source code'>[src]</a></span></h4>
 <div class='docblock'><p>Sends a copy of the payload and key provided to the specified topic. This works the same
 way as <code>send_copy</code>, the only difference is that it returns an error if enqueuing fails.</p>
-</div><h4 id='method.poll' class="method"><span id='poll.v' class='invisible'><code>pub fn <a href='#method.poll' class='fnname'>poll</a>&lt;T:&nbsp;<a class="trait" href="https://doc.rust-lang.org/nightly/core/convert/trait.Into.html" title="trait core::convert::Into">Into</a>&lt;<a class="enum" href="https://doc.rust-lang.org/nightly/core/option/enum.Option.html" title="enum core::option::Option">Option</a>&lt;<a class="struct" href="https://doc.rust-lang.org/nightly/core/time/struct.Duration.html" title="struct core::time::Duration">Duration</a>&gt;&gt;&gt;(&amp;self, timeout: T)</code></span><span class='out-of-band'><div class='ghost'></div><a class='srclink' href='../../../src/rdkafka/producer/future_producer.rs.html#189-191' title='goto source code'>[src]</a></span></h4>
+</div><h4 id='method.poll' class="method"><span id='poll.v' class='invisible'><code>pub fn <a href='#method.poll' class='fnname'>poll</a>&lt;T:&nbsp;<a class="trait" href="https://doc.rust-lang.org/nightly/core/convert/trait.Into.html" title="trait core::convert::Into">Into</a>&lt;<a class="enum" href="https://doc.rust-lang.org/nightly/core/option/enum.Option.html" title="enum core::option::Option">Option</a>&lt;<a class="struct" href="https://doc.rust-lang.org/nightly/std/time/duration/struct.Duration.html" title="struct std::time::duration::Duration">Duration</a>&gt;&gt;&gt;(&amp;self, timeout: T)</code></span><span class='out-of-band'><div class='ghost'></div><a class='srclink' href='../../../src/rdkafka/producer/future_producer.rs.html#189-191' title='goto source code'>[src]</a></span></h4>
 <div class='docblock'><p>Polls the internal producer. This is not normally required since the <code>ThreadedProducer</code> had
 a thread dedicated to calling <code>poll</code> regularly.</p>
-</div><h4 id='method.flush' class="method"><span id='flush.v' class='invisible'><code>pub fn <a href='#method.flush' class='fnname'>flush</a>&lt;T:&nbsp;<a class="trait" href="https://doc.rust-lang.org/nightly/core/convert/trait.Into.html" title="trait core::convert::Into">Into</a>&lt;<a class="enum" href="https://doc.rust-lang.org/nightly/core/option/enum.Option.html" title="enum core::option::Option">Option</a>&lt;<a class="struct" href="https://doc.rust-lang.org/nightly/core/time/struct.Duration.html" title="struct core::time::Duration">Duration</a>&gt;&gt;&gt;(&amp;self, timeout: T)</code></span><span class='out-of-band'><div class='ghost'></div><a class='srclink' href='../../../src/rdkafka/producer/future_producer.rs.html#194-196' title='goto source code'>[src]</a></span></h4>
+</div><h4 id='method.flush' class="method"><span id='flush.v' class='invisible'><code>pub fn <a href='#method.flush' class='fnname'>flush</a>&lt;T:&nbsp;<a class="trait" href="https://doc.rust-lang.org/nightly/core/convert/trait.Into.html" title="trait core::convert::Into">Into</a>&lt;<a class="enum" href="https://doc.rust-lang.org/nightly/core/option/enum.Option.html" title="enum core::option::Option">Option</a>&lt;<a class="struct" href="https://doc.rust-lang.org/nightly/std/time/duration/struct.Duration.html" title="struct std::time::duration::Duration">Duration</a>&gt;&gt;&gt;(&amp;self, timeout: T)</code></span><span class='out-of-band'><div class='ghost'></div><a class='srclink' href='../../../src/rdkafka/producer/future_producer.rs.html#194-196' title='goto source code'>[src]</a></span></h4>
 <div class='docblock'><p>Flushes the producer. Should be called before termination.</p>
 </div><h4 id='method.in_flight_count' class="method"><span id='in_flight_count.v' class='invisible'><code>pub fn <a href='#method.in_flight_count' class='fnname'>in_flight_count</a>(&amp;self) -&gt; <a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.i32.html">i32</a></code></span><span class='out-of-band'><div class='ghost'></div><a class='srclink' href='../../../src/rdkafka/producer/future_producer.rs.html#199-201' title='goto source code'>[src]</a></span></h4>
 <div class='docblock'><p>Returns the number of messages waiting to be sent, or send but not acknowledged yet.</p>
@@ -117,22 +108,20 @@ a thread dedicated to calling <code>poll</code> regularly.</p>
                 <h2>Keyboard Shortcuts</h2>
 
                 <dl>
-                    <dt><kbd>?</kbd></dt>
+                    <dt>?</dt>
                     <dd>Show this help dialog</dd>
-                    <dt><kbd>S</kbd></dt>
+                    <dt>S</dt>
                     <dd>Focus the search field</dd>
-                    <dt><kbd>↑</kbd></dt>
+                    <dt>↑</dt>
                     <dd>Move up in search results</dd>
-                    <dt><kbd>↓</kbd></dt>
+                    <dt>↓</dt>
                     <dd>Move down in search results</dd>
-                    <dt><kbd>↹</kbd></dt>
+                    <dt>↹</dt>
                     <dd>Switch tab</dd>
-                    <dt><kbd>&#9166;</kbd></dt>
+                    <dt>&#9166;</dt>
                     <dd>Go to active search result</dd>
-                    <dt><kbd>+</kbd></dt>
-                    <dd>Expand all sections</dd>
-                    <dt><kbd>-</kbd></dt>
-                    <dd>Collapse all sections</dd>
+                    <dt style="width:31px;">+ / -</dt>
+                    <dd>Collapse/expand all sections</dd>
                 </dl>
             </div>
 
