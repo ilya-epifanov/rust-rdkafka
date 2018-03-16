@@ -10,8 +10,11 @@
     <title>error.rs.html -- source</title>
 
     <link rel="stylesheet" type="text/css" href="../../normalize.css">
-    <link rel="stylesheet" type="text/css" href="../../rustdoc.css">
-    <link rel="stylesheet" type="text/css" href="../../main.css">
+    <link rel="stylesheet" type="text/css" href="../../rustdoc.css" id="mainThemeStyle">
+    
+    <link rel="stylesheet" type="text/css" href="../../dark.css">
+    <link rel="stylesheet" type="text/css" href="../../main.css" id="themeStyle">
+    <script src="../../storage.js"></script>
     
 
     
@@ -33,6 +36,13 @@
         
     </nav>
 
+    <div class="theme-picker">
+        <button id="theme-picker" aria-label="Pick another theme!">
+            <img src="../../brush.svg" width="18" alt="Pick another theme!">
+        </button>
+        <div id="theme-choices"></div>
+    </div>
+    <script src="../../theme.js"></script>
     <nav class="sub">
         <form class="search-form js-only">
             <div class="search-container">
@@ -197,6 +207,11 @@
 <span id="151">151</span>
 <span id="152">152</span>
 <span id="153">153</span>
+<span id="154">154</span>
+<span id="155">155</span>
+<span id="156">156</span>
+<span id="157">157</span>
+<span id="158">158</span>
 </pre><pre class="rust ">
 <span class="doccomment">//! Error manipulations.</span>
 <span class="kw">use</span> <span class="ident">rdsys</span>::<span class="ident">types</span>::<span class="kw-2">*</span>;
@@ -232,22 +247,35 @@
 <span class="doccomment">/// Represents all Kafka errors. Check the underlying `RDKafkaError` to get details.</span>
 <span class="attribute">#[<span class="ident">derive</span>(<span class="ident">Clone</span>, <span class="ident">PartialEq</span>, <span class="ident">Eq</span>)]</span>
 <span class="kw">pub</span> <span class="kw">enum</span> <span class="ident">KafkaError</span> {
+    <span class="doccomment">/// Invalid client configuration.</span>
     <span class="ident">ClientConfig</span>(<span class="ident">RDKafkaConfRes</span>, <span class="ident">String</span>, <span class="ident">String</span>, <span class="ident">String</span>),
+    <span class="doccomment">/// Client creation failed.</span>
     <span class="ident">ClientCreation</span>(<span class="ident">String</span>),
+    <span class="doccomment">/// Consumer commit failed.</span>
     <span class="ident">ConsumerCommit</span>(<span class="ident">RDKafkaError</span>),
-    <span class="ident">ConsumerCreation</span>(<span class="ident">String</span>),
-    <span class="ident">FutureCanceled</span>,
+    <span class="doccomment">/// Global error.</span>
     <span class="ident">Global</span>(<span class="ident">RDKafkaError</span>),
+    <span class="doccomment">/// Group list fetch failed.</span>
     <span class="ident">GroupListFetch</span>(<span class="ident">RDKafkaError</span>),
+    <span class="doccomment">/// Message consumption failed.</span>
     <span class="ident">MessageConsumption</span>(<span class="ident">RDKafkaError</span>),
+    <span class="doccomment">/// Message production error.</span>
     <span class="ident">MessageProduction</span>(<span class="ident">RDKafkaError</span>),
+    <span class="doccomment">/// Metadata fetch error.</span>
     <span class="ident">MetadataFetch</span>(<span class="ident">RDKafkaError</span>),
+    <span class="doccomment">/// No message was received.</span>
     <span class="ident">NoMessageReceived</span>,
+    <span class="doccomment">/// Unexpected null pointer</span>
     <span class="ident">Nul</span>(<span class="ident">ffi</span>::<span class="ident">NulError</span>),
+    <span class="doccomment">/// Offset fetch failed.</span>
     <span class="ident">OffsetFetch</span>(<span class="ident">RDKafkaError</span>),
+    <span class="doccomment">/// Ond of partition reached.</span>
     <span class="ident">PartitionEOF</span>(<span class="ident">i32</span>),
+    <span class="doccomment">/// Setting partition offset failed.</span>
     <span class="ident">SetPartitionOffset</span>(<span class="ident">RDKafkaError</span>),
+    <span class="doccomment">/// Offset store failed.</span>
     <span class="ident">StoreOffset</span>(<span class="ident">RDKafkaError</span>),
+    <span class="doccomment">/// Subscription creation failed.</span>
     <span class="ident">Subscription</span>(<span class="ident">String</span>),
 }
 
@@ -257,8 +285,6 @@
             <span class="ident">KafkaError</span>::<span class="ident">ClientConfig</span>(_, <span class="kw-2">ref</span> <span class="ident">desc</span>, <span class="kw-2">ref</span> <span class="ident">key</span>, <span class="kw-2">ref</span> <span class="ident">value</span>) <span class="op">=&gt;</span> <span class="macro">write</span><span class="macro">!</span>(<span class="ident">f</span>, <span class="string">&quot;KafkaError (Client config error: {} {} {})&quot;</span>, <span class="ident">desc</span>, <span class="ident">key</span>, <span class="ident">value</span>),
             <span class="ident">KafkaError</span>::<span class="ident">ClientCreation</span>(<span class="kw-2">ref</span> <span class="ident">err</span>) <span class="op">=&gt;</span> <span class="macro">write</span><span class="macro">!</span>(<span class="ident">f</span>, <span class="string">&quot;KafkaError (Client creation error: {})&quot;</span>, <span class="ident">err</span>),
             <span class="ident">KafkaError</span>::<span class="ident">ConsumerCommit</span>(<span class="ident">err</span>) <span class="op">=&gt;</span> <span class="macro">write</span><span class="macro">!</span>(<span class="ident">f</span>, <span class="string">&quot;KafkaError (Consumer commit error: {})&quot;</span>, <span class="ident">err</span>),
-            <span class="ident">KafkaError</span>::<span class="ident">ConsumerCreation</span>(<span class="kw-2">ref</span> <span class="ident">err</span>) <span class="op">=&gt;</span> <span class="macro">write</span><span class="macro">!</span>(<span class="ident">f</span>, <span class="string">&quot;KafkaError (Consumer creation error: {})&quot;</span>, <span class="ident">err</span>),
-            <span class="ident">KafkaError</span>::<span class="ident">FutureCanceled</span> <span class="op">=&gt;</span> <span class="macro">write</span><span class="macro">!</span>(<span class="ident">f</span>, <span class="string">&quot;Future canceled&quot;</span>),
             <span class="ident">KafkaError</span>::<span class="ident">Global</span>(<span class="ident">err</span>) <span class="op">=&gt;</span> <span class="macro">write</span><span class="macro">!</span>(<span class="ident">f</span>, <span class="string">&quot;KafkaError (Global error: {})&quot;</span>, <span class="ident">err</span>),
             <span class="ident">KafkaError</span>::<span class="ident">GroupListFetch</span>(<span class="ident">err</span>) <span class="op">=&gt;</span> <span class="macro">write</span><span class="macro">!</span>(<span class="ident">f</span>, <span class="string">&quot;KafkaError (Group list fetch error: {})&quot;</span>, <span class="ident">err</span>),
             <span class="ident">KafkaError</span>::<span class="ident">MessageConsumption</span>(<span class="ident">err</span>) <span class="op">=&gt;</span> <span class="macro">write</span><span class="macro">!</span>(<span class="ident">f</span>, <span class="string">&quot;KafkaError (Message consumption error: {})&quot;</span>, <span class="ident">err</span>),
@@ -281,8 +307,6 @@
             <span class="ident">KafkaError</span>::<span class="ident">ClientConfig</span>(_, <span class="kw-2">ref</span> <span class="ident">desc</span>, <span class="kw-2">ref</span> <span class="ident">key</span>, <span class="kw-2">ref</span> <span class="ident">value</span>) <span class="op">=&gt;</span> <span class="macro">write</span><span class="macro">!</span>(<span class="ident">f</span>, <span class="string">&quot;Client config error: {} {} {}&quot;</span>, <span class="ident">desc</span>, <span class="ident">key</span>, <span class="ident">value</span>),
             <span class="ident">KafkaError</span>::<span class="ident">ClientCreation</span>(<span class="kw-2">ref</span> <span class="ident">err</span>) <span class="op">=&gt;</span> <span class="macro">write</span><span class="macro">!</span>(<span class="ident">f</span>, <span class="string">&quot;Client creation error: {}&quot;</span>, <span class="ident">err</span>),
             <span class="ident">KafkaError</span>::<span class="ident">ConsumerCommit</span>(<span class="ident">err</span>) <span class="op">=&gt;</span> <span class="macro">write</span><span class="macro">!</span>(<span class="ident">f</span>, <span class="string">&quot;Consumer commit error: {}&quot;</span>, <span class="ident">err</span>),
-            <span class="ident">KafkaError</span>::<span class="ident">ConsumerCreation</span>(<span class="kw-2">ref</span> <span class="ident">err</span>) <span class="op">=&gt;</span> <span class="macro">write</span><span class="macro">!</span>(<span class="ident">f</span>, <span class="string">&quot;Consumer creation error: {}&quot;</span>, <span class="ident">err</span>),
-            <span class="ident">KafkaError</span>::<span class="ident">FutureCanceled</span> <span class="op">=&gt;</span> <span class="macro">write</span><span class="macro">!</span>(<span class="ident">f</span>, <span class="string">&quot;Future canceled&quot;</span>),
             <span class="ident">KafkaError</span>::<span class="ident">Global</span>(<span class="ident">err</span>) <span class="op">=&gt;</span> <span class="macro">write</span><span class="macro">!</span>(<span class="ident">f</span>, <span class="string">&quot;Global error: {}&quot;</span>, <span class="ident">err</span>),
             <span class="ident">KafkaError</span>::<span class="ident">GroupListFetch</span>(<span class="ident">err</span>) <span class="op">=&gt;</span> <span class="macro">write</span><span class="macro">!</span>(<span class="ident">f</span>, <span class="string">&quot;Group list fetch error: {}&quot;</span>, <span class="ident">err</span>),
             <span class="ident">KafkaError</span>::<span class="ident">MessageConsumption</span>(<span class="ident">err</span>) <span class="op">=&gt;</span> <span class="macro">write</span><span class="macro">!</span>(<span class="ident">f</span>, <span class="string">&quot;Message consumption error: {}&quot;</span>, <span class="ident">err</span>),
@@ -305,8 +329,6 @@
             <span class="ident">KafkaError</span>::<span class="ident">ClientConfig</span>(_, _, _, _) <span class="op">=&gt;</span> <span class="string">&quot;Client config error&quot;</span>,
             <span class="ident">KafkaError</span>::<span class="ident">ClientCreation</span>(_) <span class="op">=&gt;</span> <span class="string">&quot;Client creation error&quot;</span>,
             <span class="ident">KafkaError</span>::<span class="ident">ConsumerCommit</span>(_) <span class="op">=&gt;</span> <span class="string">&quot;Consumer commit error&quot;</span>,
-            <span class="ident">KafkaError</span>::<span class="ident">ConsumerCreation</span>(_) <span class="op">=&gt;</span> <span class="string">&quot;Consumer creation error&quot;</span>,
-            <span class="ident">KafkaError</span>::<span class="ident">FutureCanceled</span> <span class="op">=&gt;</span> <span class="string">&quot;Future canceled&quot;</span>,
             <span class="ident">KafkaError</span>::<span class="ident">Global</span>(_) <span class="op">=&gt;</span> <span class="string">&quot;Global error&quot;</span>,
             <span class="ident">KafkaError</span>::<span class="ident">GroupListFetch</span>(_) <span class="op">=&gt;</span> <span class="string">&quot;Group list fetch error&quot;</span>,
             <span class="ident">KafkaError</span>::<span class="ident">MessageConsumption</span>(_) <span class="op">=&gt;</span> <span class="string">&quot;Message consumption error&quot;</span>,
@@ -328,8 +350,6 @@
             <span class="ident">KafkaError</span>::<span class="ident">ClientConfig</span>(_, _, _, _) <span class="op">=&gt;</span> <span class="prelude-val">None</span>,
             <span class="ident">KafkaError</span>::<span class="ident">ClientCreation</span>(_) <span class="op">=&gt;</span> <span class="prelude-val">None</span>,
             <span class="ident">KafkaError</span>::<span class="ident">ConsumerCommit</span>(<span class="kw-2">ref</span> <span class="ident">err</span>) <span class="op">=&gt;</span> <span class="prelude-val">Some</span>(<span class="ident">err</span>),
-            <span class="ident">KafkaError</span>::<span class="ident">ConsumerCreation</span>(_) <span class="op">=&gt;</span> <span class="prelude-val">None</span>,
-            <span class="ident">KafkaError</span>::<span class="ident">FutureCanceled</span> <span class="op">=&gt;</span> <span class="prelude-val">None</span>,
             <span class="ident">KafkaError</span>::<span class="ident">Global</span>(<span class="kw-2">ref</span> <span class="ident">err</span>) <span class="op">=&gt;</span> <span class="prelude-val">Some</span>(<span class="ident">err</span>),
             <span class="ident">KafkaError</span>::<span class="ident">GroupListFetch</span>(<span class="kw-2">ref</span> <span class="ident">err</span>) <span class="op">=&gt;</span> <span class="prelude-val">Some</span>(<span class="ident">err</span>),
             <span class="ident">KafkaError</span>::<span class="ident">MessageConsumption</span>(<span class="kw-2">ref</span> <span class="ident">err</span>) <span class="op">=&gt;</span> <span class="prelude-val">Some</span>(<span class="ident">err</span>),
@@ -365,20 +385,22 @@
                 <h2>Keyboard Shortcuts</h2>
 
                 <dl>
-                    <dt>?</dt>
+                    <dt><kbd>?</kbd></dt>
                     <dd>Show this help dialog</dd>
-                    <dt>S</dt>
+                    <dt><kbd>S</kbd></dt>
                     <dd>Focus the search field</dd>
-                    <dt>↑</dt>
+                    <dt><kbd>↑</kbd></dt>
                     <dd>Move up in search results</dd>
-                    <dt>↓</dt>
+                    <dt><kbd>↓</kbd></dt>
                     <dd>Move down in search results</dd>
-                    <dt>↹</dt>
+                    <dt><kbd>↹</kbd></dt>
                     <dd>Switch tab</dd>
-                    <dt>&#9166;</dt>
+                    <dt><kbd>&#9166;</kbd></dt>
                     <dd>Go to active search result</dd>
-                    <dt style="width:31px;">+ / -</dt>
-                    <dd>Collapse/expand all sections</dd>
+                    <dt><kbd>+</kbd></dt>
+                    <dd>Expand all sections</dd>
+                    <dt><kbd>-</kbd></dt>
+                    <dd>Collapse all sections</dd>
                 </dl>
             </div>
 
