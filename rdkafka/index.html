@@ -104,19 +104,19 @@
 <h3 id="client-types" class="section-header"><a href="#client-types">Client types</a></h3>
 <p><code>rust-rdkafka</code> provides low level and high level consumers and producers. Low level:</p>
 <ul>
-<li><a href="https://docs.rs/rdkafka/*/rdkafka/consumer/base_consumer/struct.BaseConsumer.html"><code>BaseConsumer</code></a>: simple wrapper around the librdkafka consumer. It requires to be periodically <code>poll()</code>ed in order to execute callbacks, rebalances and to receive messages.</li>
-<li><a href="https://docs.rs/rdkafka/*/rdkafka/producer/base_producer/struct.BaseProducer.html"><code>BaseProducer</code></a>: simple wrapper around the librdkafka producer. As in the consumer case, the user must call <code>poll()</code> periodically to execute delivery callbacks.</li>
-<li><a href="https://docs.rs/rdkafka/*/rdkafka/producer/base_producer/struct.ThreadedProducer.html"><code>ThreadedProducer</code></a>: <code>BaseProducer</code> with a separate thread dedicated to polling the producer.</li>
+<li><a href="consumer/base_consumer/struct.BaseConsumer.html"><code>BaseConsumer</code></a>: simple wrapper around the librdkafka consumer. It requires to be periodically <code>poll()</code>ed in order to execute callbacks, rebalances and to receive messages.</li>
+<li><a href="producer/base_producer/struct.BaseProducer.html"><code>BaseProducer</code></a>: simple wrapper around the librdkafka producer. As in the consumer case, the user must call <code>poll()</code> periodically to execute delivery callbacks.</li>
+<li><a href="producer/base_producer/struct.ThreadedProducer.html"><code>ThreadedProducer</code></a>: <code>BaseProducer</code> with a separate thread dedicated to polling the producer.</li>
 </ul>
 <p>High level:</p>
 <ul>
-<li><a href="https://docs.rs/rdkafka/*/rdkafka/consumer/stream_consumer/struct.StreamConsumer.html"><code>StreamConsumer</code></a>: it returns a <a href="https://docs.rs/futures/0.1.3/futures/stream/trait.Stream.html"><code>stream</code></a> of messages and takes care of polling the consumer internally.</li>
-<li><a href="https://docs.rs/rdkafka/*/rdkafka/producer/future_producer/struct.FutureProducer.html"><code>FutureProducer</code></a>: it returns a <a href="https://docs.rs/futures/0.1.3/futures/trait.Future.html"><code>future</code></a> that will be completed once the message is delivered to Kafka (or failed).</li>
+<li><a href="consumer/stream_consumer/struct.StreamConsumer.html"><code>StreamConsumer</code></a>: it returns a <a href="https://docs.rs/futures/0.1.3/futures/stream/trait.Stream.html"><code>stream</code></a> of messages and takes care of polling the consumer internally.</li>
+<li><a href="producer/future_producer/struct.FutureProducer.html"><code>FutureProducer</code></a>: it returns a <a href="https://docs.rs/futures/0.1.3/futures/trait.Future.html"><code>future</code></a> that will be completed once the message is delivered to Kafka (or failed).</li>
 </ul>
 <p>For more information about consumers and producers, refer to their module-level documentation.</p>
 <p><em>Warning</em>: the library is under active development and the APIs are likely to change.</p>
 <h3 id="asynchronous-data-processing-with-tokio-rs" class="section-header"><a href="#asynchronous-data-processing-with-tokio-rs">Asynchronous data processing with tokio-rs</a></h3>
-<p><a href="https://tokio.rs/">tokio-rs</a> is a platform for fast processing of asynchronous events in Rust. The interfaces exposed by the <a href="https://docs.rs/rdkafka/*/rdkafka/consumer/stream_consumer/struct.StreamConsumer.html"><code>StreamConsumer</code></a> and the <a href="https://docs.rs/rdkafka/*/rdkafka/producer/future_producer/struct.FutureProducer.html"><code>FutureProducer</code></a> allow rust-rdkafka users to easily integrate Kafka consumers and producers within the tokio-rs platform, and write asynchronous message processing code. Note that rust-rdkafka can be used without tokio-rs.</p>
+<p><a href="https://tokio.rs/">tokio-rs</a> is a platform for fast processing of asynchronous events in Rust. The interfaces exposed by the <a href="consumer/stream_consumer/struct.StreamConsumer.html"><code>StreamConsumer</code></a> and the <a href="producer/future_producer/struct.FutureProducer.html"><code>FutureProducer</code></a> allow rust-rdkafka users to easily integrate Kafka consumers and producers within the tokio-rs platform, and write asynchronous message processing code. Note that rust-rdkafka can be used without tokio-rs.</p>
 <p>To see rust-rdkafka in action with tokio-rs, check out the <a href="https://github.com/fede1024/rust-rdkafka/blob/master/examples/asynchronous_processing.rs">asynchronous processing example</a> in the examples folder.</p>
 <h3 id="at-least-once-delivery" class="section-header"><a href="#at-least-once-delivery">At-least-once delivery</a></h3>
 <p>At-least-once delivery semantic is common in many streaming applications: every message is guaranteed to be processed at least once; in case of temporary failure, the message can be re-processed and/or re-delivered, but no message will be lost.</p>
